@@ -5,89 +5,79 @@ In this project, you will design Pacman agents that use sensors to locate and ea
 
 ## Part 1 - Exact Inference Observation
 
-The command below tells the SearchAgent to use tinyMazeSearch as its search algorithm, which is implemented in search.py. Pacman should navigate the maze successfully.
-```bash
-$ python pacman.py -l tinyMaze -p SearchAgent -a fn=tinyMazeSearch
-```
-
-The commands below utilises the DFS algorithm to allow Pacman to nagivate the different sized mazes successfully.
-```bash
-$ python pacman.py -l tinyMaze -p SearchAgent
-```
+This correctly updates the agent's belief distribution over ghost positions given an observation from Pacman's sensors. The implementation also handlea one special case: when a ghost is eaten, you should place that ghost in its prison cell.
 
 ```bash
-$ python pacman.py -l mediumMaze -p SearchAgent
-```
-
-```bash
-$ python pacman.py -l bigMaze -z .5 -p SearchAgent
+$ python autograder.py -q q1
 ```
 
 ## Part 2 - Exact Inference with Time Elapse
 
-The commands below utilises the DFS algorithm to allow Pacman to nagivate the different sized mazes successfully.
+The reading indicating the ghost is very far is likely to be the result of a buggy sensor. Pacman's prior knowledge of how the ghost may move will decrease the impact of this reading since Pacman knows the ghost could not move so far in only one move.
 
 ```bash
-$ python pacman.py -l mediumMaze -p SearchAgent -a fn=bfs
+$ python autograder.py -q q2
 ```
+
+As an example of the GoSouthGhostAgent
 
 ```bash
-$ python pacman.py -l bigMaze -p SearchAgent -a fn=bfs -z .5
+$ python autograder.py -t test_cases/q2/2-ExactElapse
 ```
-
-**Note:** If Pacman moves slowly for you, try the option **--frametime 0**
 
 ## Part 3 - Exact Inference Full Test
 
-The commands below utilises the UCS algorithm to allow Pacman to nagivate the different sized mazes successfully.
+The agent should first find the most likely position of each remaining (uncaptured) ghost, then choose an action that minimizes the distance to the closest ghost. 
 
 ```bash
-$ python pacman.py -l mediumMaze -p SearchAgent -a fn=ucs
-```
-
-```bash
-$ python pacman.py -l mediumDottedMaze -p StayEastSearchAgent
-```
-
-```bash
-$ python pacman.py -l mediumScaryMaze -p StayWestSearchAgent
+$ python autograder.py -q q3
 ```
 
 ## Part 4 - Approximate Inference Observation
 
-The command below utilises the A* Search algorithm to allow Pacman to nagivate the different sized mazes successfully.
+The implementation handles two special cases:
+
+1. When all your particles receive zero weight based on the evidence, you should resample all particles from the prior to recover.
+
+2. When a ghost is eaten, you should update all particles to place that ghost in its prison cell, as described in the comments of observe. 
+
+When complete, Pacman should be able to track ghosts nearly as effectively as with exact inference.
 
 ```bash
-$ python pacman.py -l bigMaze -z .5 -p SearchAgent -a fn=astar,heuristic=manhattanHeuristic
+$ python autograder.py -q q4
 ```
 
 ## Part 5 - Approximate Inference with Time Elapse
 
-In corner mazes, there are four dots, one in each corner. Our new search problem is to find the shortest path through the maze that touches all four corners (whether the maze actually has food there or not). **Note** that for some mazes like tinyCorners, the shortest path does not always go to the closest food first! 
+Pacman should be able to track ghosts nearly as effectively as with exact inference.
 
 ```bash
-$ python pacman.py -l tinyCorners -p SearchAgent -a fn=bfs,prob=CornersProblem
+$ python autograder.py -q q5
 ```
 
+To see which ghost is used for each test case you can look in the .test files. As an example, you can run
+
 ```bash
-$ python pacman.py -l mediumCorners -p SearchAgent -a fn=bfs,prob=CornersProblem
+$ python autograder.py -t test_cases/q5/2-ParticleElapse
 ```
 
 
 ## Part 6 - Joint Particle Filter Observation
 
-Now we'll solve a hard search problem: eating all the Pacman food in as few steps as possible. 
+The implementation handles two special cases. 
+
+1. When all your particles receive zero weight based on the evidence, you should resample all particles from the prior to recover.
+
+2. When a ghost is eaten, you should update all particles to place that ghost in its prison cell, as described in the comments of observeState.
 
 ```bash
-$ python pacman.py -l trickySearch -p AStarFoodSearchAgent
+$ python autograder.py -q q6
 ```
 
 ## Part 7 - Joint Particle Filter with Elapse Time
 
-Sometimes, even with A* and a good heuristic, finding the optimal path through all the dots is hard. In these cases, we'd still like to find a reasonably good path, quickly. In this section, you'll write an agent that always greedily eats the closest dot. 
-
 ```bash
-$ python pacman.py -l bigSearch -p ClosestDotSearchAgent -z .5 
+$ python autograder.py -q q7
 ```
 
 
