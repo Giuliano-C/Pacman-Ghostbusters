@@ -1,11 +1,13 @@
 # Pacman-Ghostbusters
 
 
-In this project, you will design Pacman agents that use sensors to locate and eat invisible ghosts. You'll advance from locating single, stationary ghosts to hunting packs of multiple moving ghosts with ruthless efficiency.
+In this project, I designed Pacman agents that use sensors to locate and eat invisible ghosts. The main goal was to advance from locating single, stationary ghosts to hunting packs of multiple moving ghosts with ruthless efficiency.
 
 ## Part 1 - Exact Inference Observation
 
-This correctly updates the agent's belief distribution over ghost positions given an observation from Pacman's sensors. The implementation also handlea one special case: when a ghost is eaten, you should place that ghost in its prison cell.
+This correctly updates the agent's belief distribution over ghost positions given an observation from Pacman's sensors. The implementation also handle one special case: 
+
+- when a ghost is eaten, you should place that ghost in its prison cell.
 
 ```bash
 $ python autograder.py -q q1
